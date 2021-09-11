@@ -5,7 +5,7 @@ build:
 	docker build -t leonardocuquejo/${NAME}:${VERSION} --target=prod -f docker/Dockerfile  .
 
 up: build
-	docker run -p 3000:3000 -d --restart=always --name ${NAME} leonardocuquejo/${NAME}:${VERSION}
+	docker run -p 3000:3000 -d --rm --name ${NAME} leonardocuquejo/${NAME}:${VERSION}
 
 dev-build:
 	docker build -t leonardocuquejo/${NAME}:${VERSION}-dev --target=dev -f docker/Dockerfile  .

@@ -28,4 +28,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          docker build -t leonardocuquejo/cuquejo-org:1.0 -f docker/Dockerfile  .
+          make build
