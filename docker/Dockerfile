@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:latest AS base
 
 EXPOSE 3000
 
@@ -14,6 +14,15 @@ RUN chown -R cuquejo_org:cuquejo_org /app
 
 USER cuquejo_org
 
+FROM base AS prod-build
+RUN yarn build
+
+FROM nginx:1.19-alpine as prod
+RUN rm -rf /usr/share/nginx/html
+COPY docker/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=prod-build /app/build /usr/share/nginx/html
+
+FROM base AS dev
 RUN yarn install
 RUN npx browserslist@latest --update-db
 
