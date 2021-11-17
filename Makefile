@@ -5,10 +5,10 @@ build:
 	docker build -t leonardocuquejo/${NAME}:${VERSION} --target=prod -f docker/Dockerfile  .
 
 build-ci:
-	docker build -t  ${REGISTRY_URL}/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG} --target=prod -f docker/Dockerfile  .
+	docker build -t  ${REGISTRY_URL}/${GOOGLE_PROJECT_ID}/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG} --target=prod -f docker/Dockerfile  .
 
 push-ci:
-	docker push ${REGISTRY_URL}/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG}
+	docker push ${REGISTRY_URL}/${GOOGLE_PROJECT_ID}/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG}
 
 test:
 	docker build -t leonardocuquejo/${NAME}:${VERSION} --target=test -f docker/Dockerfile  .
