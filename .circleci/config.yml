@@ -10,10 +10,7 @@ jobs:
       - image: cimg/node:16.13.0
     steps:
       - checkout
-      - run: |
-          cd cuquejo.org
-          yarn install
-          yarn test --watchAll=false
+      - run: make test-ci
 
   build-and-push:
     machine:
@@ -26,10 +23,8 @@ jobs:
       - checkout
       - run: ./.circleci/setup_gcloud.sh
       - run: gcloud auth configure-docker --quiet $REGISTRY_URL
-      - run: docker pull busybox
-      - run: docker tag busybox us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/cuquejo.org:latest
-      - run: docker push us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/cuquejo.org:latest
-
+      - run: make build-ci
+      - run: make push-ci
   # Uisng ORBS
   # build-and-push:
   #   executor: gcp-gcr/default

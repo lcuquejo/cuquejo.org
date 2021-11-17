@@ -4,8 +4,19 @@ NAME=cuquejo-org
 build:
 	docker build -t leonardocuquejo/${NAME}:${VERSION} --target=prod -f docker/Dockerfile  .
 
+build-ci:
+	docker build -t  ${REGISTRY_URL}/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG} --target=prod -f docker/Dockerfile  .
+
+push-ci:
+	docker push ${REGISTRY_URL}/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG}
+
 test:
 	docker build -t leonardocuquejo/${NAME}:${VERSION} --target=test -f docker/Dockerfile  .
+
+test-ci:
+	cd cuquejo.org
+	yarn install
+	yarn test --watchAll=false
 
 up: build
 	docker run -p 3000:3000 -d --rm --name ${NAME} leonardocuquejo/${NAME}:${VERSION}
