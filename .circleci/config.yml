@@ -21,7 +21,6 @@ jobs:
     #   - checkout
     #   - run: make test
   build-and-push:
-    requires: test
     executor: gcp-gcr/default
     steps:
       - checkout
@@ -43,4 +42,6 @@ workflows:
   build_and_test:
     jobs:
       - test
-      - build-and-push
+      - build-and-push:
+          requires:
+            - test
