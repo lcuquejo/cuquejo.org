@@ -1,4 +1,4 @@
-FROM node:latest AS base
+FROM node:17.1.0-stretch AS base
 
 EXPOSE 3000
 
@@ -13,6 +13,9 @@ COPY cuquejo.org /app
 RUN chown -R cuquejo_org:cuquejo_org /app
 
 USER cuquejo_org
+
+FROM base AS test
+RUN yarn test --watchAll=false
 
 FROM base AS prod-build
 RUN yarn build
