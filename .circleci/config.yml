@@ -25,17 +25,20 @@ jobs:
     environment:
      DOCKER_BUILDKIT: 1
      REGISTRY_URL: us-central1-docker.pkg.dev
+     TAG: v.0.1
     steps:
       - checkout
       - gcp-gcr/gcr-auth
-      - gcp-gcr/build-image:
-          dockerfile:  docker/Dockerfile
-          extra_build_args: "--target=prod"
-          image: cuquejo/${CIRCLE_PROJECT_REPONAME}
-          tag: ${CIRCLE_TAG}
-          registry-url: ${REGISTRY_URL}
+      - run: docker build -t ${REGISTRY_URL}/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG} --target=prod -f docker/Dockerfile  .
+      - run: docker image ls && docker push ${REGISTRY_URL}/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG}
 
-      - run: docker image ls && docker push ${REGISTRY_URL}/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
+      # - gcp-gcr/build-image:
+      #     dockerfile:  docker/Dockerfile
+      #     extra_build_args: "--target=prod"
+      #     image: cuquejo/${CIRCLE_PROJECT_REPONAME}
+      #     tag: ${CIRCLE_TAG}
+      #     registry-url: ${REGISTRY_URL}
+
       # - gcp-gcr/push-image:
       #     image: cuquejo/${CIRCLE_PROJECT_REPONAME}
       #     tag: ${CIRCLE_TAG}
