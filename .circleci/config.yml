@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   gcp-gke: circleci/gcp-gke@0.1.0
-  gcp-gcr: circleci/gcp-gcr@0.13.0
+  # gcp-gcr: circleci/gcp-gcr@0.13.0
 
 # Define the jobs we want to run for this project
 jobs:
@@ -24,23 +24,12 @@ jobs:
       TAG: v.0.1
     steps:
       - checkout
-      - run: |
-          echo "Setup gcloud:"
-          sudo apt-get install -y apt-transport-https ca-certificates gnupg
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-          sudo apt-get update && sudo apt-get install google-cloud-sdk
-          echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
-          gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-          gcloud --quiet config set project $GOOGLE_PROJECT_ID
-          gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
-          gcloud --quiet config set compute/region $GOOGLE_COMPUTE_REGION
-          echo "Setup GCR:"
-          gcloud auth configure-docker --quiet $REGISTRY_URL
-          docker pull busybox
-          docker tag busybox us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/cuquejo.org:latest
+      - run: ./.circleci/setup_gcloud.sh
+      - run: gcloud auth configure-docker --quiet $REGISTRY_URL
+      - run: docker pull busybox
+      - run: docker tag busybox us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/cuquejo.org:latest
 
-
+  # Uisng ORBS
   # build-and-push:
   #   executor: gcp-gcr/default
   #   environment:
@@ -68,6 +57,8 @@ workflows:
     jobs:
       - test
       - build-and-push:
+          requires:
+            - test
           filters:
             tags:
               only: /.*/
