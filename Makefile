@@ -15,8 +15,7 @@ test:
 
 test-ci:
 	cd cuquejo.org
-	yarn install
-	yarn test --watchAll=false
+	yarn install && yarn test --watchAll=false
 
 up: build
 	docker run -p 3000:3000 -d --rm --name ${NAME} leonardocuquejo/${NAME}:${VERSION}
