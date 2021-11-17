@@ -28,6 +28,7 @@ jobs:
       - run: gcloud auth configure-docker --quiet $REGISTRY_URL
       - run: docker pull busybox
       - run: docker tag busybox us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/cuquejo.org:latest
+      - run: docker push us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/cuquejo.org:latest
 
   # Uisng ORBS
   # build-and-push:
