@@ -26,7 +26,6 @@ jobs:
           image: ${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
           registry-url: us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/
 
-
 # Orchestrate our job run sequence
 workflows:
   build_and_test:
