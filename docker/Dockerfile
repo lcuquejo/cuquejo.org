@@ -15,6 +15,7 @@ RUN chown -R cuquejo_org:cuquejo_org /app
 USER cuquejo_org
 
 FROM base AS test
+RUN yarn install
 RUN yarn test --watchAll=false
 
 FROM base AS prod-build
