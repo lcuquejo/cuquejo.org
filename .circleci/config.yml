@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   gcp-gke: circleci/gcp-gke@0.1.0
-  gcr: circleci/gcp-gcr@0.0.2
+  gcp-gcr: circleci/gcp-gcr@0.13.0
 
 # Define the jobs we want to run for this project
 jobs:
@@ -15,14 +15,14 @@ jobs:
     executor: gcp-gcr/default
     steps:
       - checkout
-      - gcr/gcr-auth
-      - gcr/build-image:
+      - gcp-gcr/gcr-auth
+      - gcp-gcr/build-image:
           dockerfile:  docker/Dockerfile
           extra_build_args: "--target=prod"
           image: ${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
           registry-url: us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/
 
-      - gcr/push-image:
+      - gcp-gcr/push-image:
           image: ${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
           registry-url: us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/
 
