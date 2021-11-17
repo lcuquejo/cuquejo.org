@@ -28,7 +28,7 @@ jobs:
       - run: gcloud auth configure-docker --quiet $REGISTRY_URL
       - run: make build-ci
       - run: make push-ci
-  # Uisng ORBS
+  ## Uisng ORBS
   # build-and-push:
   #   executor: gcp-gcr/default
   #   environment:
@@ -58,6 +58,3 @@ workflows:
       - build-and-push:
           requires:
             - test
-          filters:
-            tags:
-              only: /.*/
