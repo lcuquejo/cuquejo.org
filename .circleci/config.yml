@@ -28,12 +28,12 @@ jobs:
       - gcp-gcr/build-image:
           dockerfile:  docker/Dockerfile
           extra_build_args: "--target=prod"
-          image: ${CIRCLE_PROJECT_REPONAME}
+          image: cuquejo/${CIRCLE_PROJECT_REPONAME}
           tag: ${CIRCLE_SHA1}
           registry-url: us-central1-docker.pkg.dev
 
       - gcp-gcr/push-image:
-          image: ${CIRCLE_PROJECT_REPONAME}
+          image: cuquejo/${CIRCLE_PROJECT_REPONAME}
           tag: ${CIRCLE_SHA1}
           registry-url: us-central1-docker.pkg.dev
 
