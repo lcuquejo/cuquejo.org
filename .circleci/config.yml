@@ -10,7 +10,10 @@ jobs:
       - image: cimg/node:16.13.0
     steps:
       - checkout
-      - run: make test-ci
+      - run: |
+          cd cuquejo.org
+          yarn install
+          yarn test --watchAll=false
 
   build-and-push:
     machine:

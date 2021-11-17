@@ -13,10 +13,6 @@ push-ci:
 test:
 	docker build -t leonardocuquejo/${NAME}:${VERSION} --target=test -f docker/Dockerfile  .
 
-test-ci:
-	cd cuquejo.org
-	yarn install && yarn test --watchAll=false
-
 up: build
 	docker run -p 3000:3000 -d --rm --name ${NAME} leonardocuquejo/${NAME}:${VERSION}
 
