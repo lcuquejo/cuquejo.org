@@ -24,6 +24,7 @@ jobs:
     executor: gcp-gcr/default
     environment:
      DOCKER_BUILDKIT: 1
+     REGISTRY_URL: us-central1-docker.pkg.dev
     steps:
       - checkout
       - gcp-gcr/gcr-auth
@@ -32,12 +33,13 @@ jobs:
           extra_build_args: "--target=prod"
           image: cuquejo/${CIRCLE_PROJECT_REPONAME}
           tag: ${CIRCLE_TAG}
-          registry-url: us-central1-docker.pkg.dev
+          registry-url: ${REGISTRY_URL}
 
-      - gcp-gcr/push-image:
-          image: cuquejo/${CIRCLE_PROJECT_REPONAME}
-          tag: ${CIRCLE_TAG}
-          registry-url: us-central1-docker.pkg.dev
+      - run: docker image ls && docker push ${REGISTRY_URL}/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
+      # - gcp-gcr/push-image:
+      #     image: cuquejo/${CIRCLE_PROJECT_REPONAME}
+      #     tag: ${CIRCLE_TAG}
+      #     registry-url: ${REGISTRY_URL}
 
 # Orchestrate our job run sequence
 workflows:
@@ -47,3 +49,6 @@ workflows:
       - build-and-push:
           requires:
             - test
+          filters:
+            tags:
+              only: /v.*/
