@@ -22,8 +22,11 @@ jobs:
     #   - run: make test
   build-and-push:
     executor: gcp-gcr/default
+    environment:
+     DOCKER_BUILDKIT: 1
     steps:
       - checkout
+      - run: echo "us-central1-docker.pkg.dev/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}" | base64
       - gcp-gcr/gcr-auth
       - gcp-gcr/build-image:
           dockerfile:  docker/Dockerfile
