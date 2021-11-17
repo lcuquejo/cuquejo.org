@@ -47,8 +47,6 @@ workflows:
     jobs:
       - test
       - build-and-push:
-          requires:
-            - test
           filters:
             tags:
-              only: /v.*/
+              only: /.*/
