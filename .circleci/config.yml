@@ -6,12 +6,22 @@ orbs:
 # Define the jobs we want to run for this project
 jobs:
   test:
-    machine:
-      image: ubuntu-2004:202107-02
+    docker:
+      - image: cimg/node:16.13.0
     steps:
       - checkout
-      - run: make test
+      - run: |
+          cd cuquejo.org
+          yarn install
+          yarn test --watchAll=false
+    # Example Using docker build
+    # machine:
+    #   image: ubuntu-2004:202107-02
+    # steps:
+    #   - checkout
+    #   - run: make test
   build-and-push:
+    requires: test
     executor: gcp-gcr/default
     steps:
       - checkout
