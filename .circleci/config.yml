@@ -26,18 +26,17 @@ jobs:
      DOCKER_BUILDKIT: 1
     steps:
       - checkout
-      - run: echo "us-central1-docker.pkg.dev/$GOOGLE_PROJECT_ID/cuquejo/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}" | base64
       - gcp-gcr/gcr-auth
       - gcp-gcr/build-image:
           dockerfile:  docker/Dockerfile
           extra_build_args: "--target=prod"
           image: cuquejo/${CIRCLE_PROJECT_REPONAME}
-          tag: ${CIRCLE_SHA1}
+          tag: ${CIRCLE_TAG}
           registry-url: us-central1-docker.pkg.dev
 
       - gcp-gcr/push-image:
           image: cuquejo/${CIRCLE_PROJECT_REPONAME}
-          tag: ${CIRCLE_SHA1}
+          tag: ${CIRCLE_TAG}
           registry-url: us-central1-docker.pkg.dev
 
 # Orchestrate our job run sequence
