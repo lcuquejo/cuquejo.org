@@ -15,14 +15,14 @@ jobs:
     executor: gcp-gcr/default
     steps:
       - checkout
-      - gcp-gcr/gcr-auth
-      - gcp-gcr/build-image:
+      - gcr/gcr-auth
+      - gcr/build-image:
           dockerfile:  docker/Dockerfile
           extra_build_args: "--target=prod"
           image: ${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
           registry-url: us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/
 
-      - gcp-gcr/push-image:
+      - gcr/push-image:
           image: ${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
           registry-url: us-central1-docker.pkg.dev/regal-reporter-298211/cuquejo/
 
