@@ -35,8 +35,7 @@ jobs:
     steps:
       - checkout
       - run: ./.circleci/setup_gcloud.sh
-      - run: curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh
-      - run: helm init --client-only --kubeconfig=$HOME/.kube/kubeconfig
+      - run: ./.circleci/setup_kubectl_helm.sh
       - run: helm upgrade --install --namespace cuquejo --set image.url=${REGISTRY_URL}/${GOOGLE_PROJECT_ID}/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG} cuquejo-org .
 
 # Orchestrate our job run sequence
