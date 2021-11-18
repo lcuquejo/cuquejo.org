@@ -32,6 +32,9 @@ jobs:
   deploy:
     docker:
       - image: cimg/base:stable
+    environment:
+      REGISTRY_URL: us-central1-docker.pkg.dev
+      TAG: 1.0.1
     steps:
       - checkout
       - run: ./.circleci/setup_gcloud.sh
