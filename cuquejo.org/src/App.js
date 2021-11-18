@@ -6,8 +6,7 @@ function App() {
       <header className="App-header">
         <img src="logo.png" className="App-logo" alt="logo" />
         <p>Welcome to My GKE / CircleCI / Playground</p>
-        <p>
-          <ul>
+        <ul>
             <li>
               <a
                 className="App-link"
@@ -39,7 +38,6 @@ function App() {
               </a>
             </li>
           </ul>
-        </p>
       </header>
     </div>
   );
