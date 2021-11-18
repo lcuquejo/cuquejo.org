@@ -33,17 +33,17 @@ spec:
           image: "{{ .Values.image.url }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
+            - name: node
+              containerPort: 3000
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: node
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: node
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

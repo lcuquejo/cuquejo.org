@@ -1,22 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src="logo.png" className="App-logo" alt="logo" />
+        <p>Welcome to My GKE / CircleCI / Playground</p>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <ul>
+            <li>
+              <a
+                className="App-link"
+                href="https://www.linkedin.com/in/leonardo-cuquejo-875a9721"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                My Linkedin page!
+              </a>
+            </li>
+            <li>
+              <a
+                className="App-link"
+                href="https://github.com/lcuquejo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                My GitHub :)
+              </a>
+            </li>
+            <li>
+              <a
+                className="App-link"
+                href="https://coinagio.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Crypto Agio (BRL/EUR/USD)
+              </a>
+            </li>
+          </ul>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
