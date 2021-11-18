@@ -4,6 +4,15 @@ NAME=cuquejo-org
 build:
 	docker build -t leonardocuquejo/${NAME}:${VERSION} --target=prod -f docker/Dockerfile  .
 
+build-ci:
+	docker build -t ${REGISTRY_URL}/${GOOGLE_PROJECT_ID}/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG} --target=prod -f docker/Dockerfile  .
+
+push-ci:
+	docker push ${REGISTRY_URL}/${GOOGLE_PROJECT_ID}/cuquejo/${CIRCLE_PROJECT_REPONAME}:${TAG}
+
+test:
+	docker build -t leonardocuquejo/${NAME}:${VERSION} --target=test -f docker/Dockerfile  .
+
 up: build
 	docker run -p 3000:3000 -d --rm --name ${NAME} leonardocuquejo/${NAME}:${VERSION}
 
@@ -11,7 +20,7 @@ dev-build:
 	docker build -t leonardocuquejo/${NAME}:${VERSION}-dev --target=dev -f docker/Dockerfile  .
 
 dev-up: dev-build
-	docker run -p 3000:3000 -d --rm --name ${NAME}-dev leonardocuquejo/${NAME}:${VERSION}-dev
+	docker run -p 3000:3000 -d --rm --name ${NAME} -v ${PWD}/cuquejo.org/src:/app/src leonardocuquejo/${NAME}:${VERSION}-dev
 
 down:
 	docker stop ${NAME}
