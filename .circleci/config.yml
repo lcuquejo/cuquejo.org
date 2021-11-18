@@ -31,7 +31,7 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/base:latest
+      - image: cimg/base:stable
     steps:
       - checkout
       - run: ./.circleci/setup_gcloud.sh
@@ -47,4 +47,6 @@ workflows:
       - build-and-push:
           requires:
             - test
-      - deploy
+      - deploy:
+          requires:
+            - build-and-push
